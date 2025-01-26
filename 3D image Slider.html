@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Image Slider</title>
+  <style>
+    body {
+      margin: 0px 20px 0px 20px;;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      
+      overflow: hidden;
+    }
+
+    .slider-container {
+      position: relative;
+width : 100%;
+      max-width: 900px;
+      height: 500px;
+      perspective: 1200px;
+border : solid 2px black;
+margin : 10px 0px 20px 50px; 
+background-color : orange;
+    }
+
+    .slides {
+      width: 60%;
+      height: 100%;
+      display: flex;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease-in-out;
+     margin : 90px 0px 20px 310px ;
+
+    }
+
+    .slide {
+      position: absolute;
+      width: 60%;
+      height: 60%;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 0.5;
+      
+border : solid 2px black;
+    }
+
+    .slide.active {
+      transform: translateZ(50px);
+      opacity: 1;
+     margin:0px 30px 100px 25px;
+height : 325px;
+    }
+
+    .slide.left {
+      transform: translateX(+85%) rotateY(55.5deg);
+margin : 690px 0px 0px 0px : 
+    }
+
+    .slide.right {
+      transform: translateX(-88.5%) rotateY(-30deg);
+margin : 100px 0px 0px 0px : 
+    }
+
+    .navigation {
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-20%);
+    }
+
+    .nav-button {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: pink;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+margin : 0px 0px 80rem 0px;
+    }
+
+    .nav-button:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider-container">
+    <div class="slides">
+      <div class="slide" style="background-image: url('https://th.bing.com/th/id/OIP.hvVQLnyxDcMMteupESjjcQHaJ1?w=156&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7');"></div>
+      <div class="slide" style="background-image: url('https://th.bing.com/th/id/OIP.1v4hrtKhtX3q2E8TQ-5uAwHaG4?w=199&h=185&c=7&r=0&o=5&dpr=1.3&pid=1.7');"></div>
+      <div class="slide" style="background-image: url('https://www.learnreligions.com/thmb/-VmjnsLNdVAkCAazEFZFdDcrjHM=/6000x4000/filters:fill(auto,1)/himalaya-mountains-landscape-from-kalapattar-view-point-at-sunset--everest-region--nepal-864223704-5c7374c546e0fb0001835dc3.jpg');"></div>
+    </div>
+    <div class="navigation">
+      <button class="nav-button prev">&#10094;</button>
+      <button class="nav-button next">&#10095;</button>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+
+    let currentIndex = 0;
+
+    function updateSlider() {
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active', 'left', 'right');
+
+        if (index === currentIndex) {
+          slide.classList.add('active');
+        } else if (index === (currentIndex - 1 + slides.length) % slides.length) {
+          slide.classList.add('left');
+        } else if (index === (currentIndex + 1) % slides.length) {
+          slide.classList.add('right');
+        }
+      });
+    }
+
+    function showNextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlider();
+    }
+
+    function showPrevSlide() {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateSlider();
+    }
+
+    nextButton.addEventListener('click', showNextSlide);
+    prevButton.addEventListener('click', showPrevSlide);
+
+    // Initialize the slider
+    updateSlider();
+
+    // Auto-slide functionality
+    setInterval(showNextSlide, 2000);
+  </script>
+</body>
+</html>
